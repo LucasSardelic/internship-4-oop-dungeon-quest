@@ -83,8 +83,8 @@ namespace Library.Domain.Creatures
                         if(player.CurrentHP>player.MaxHP)
                         { player.CurrentHP = player.MaxHP; }
                         player.Attack += 5;
-                        Crit -= 2;
-                        Stun -= 2;
+                        player.Crit -= 2;
+                        player.Stun -= 2;
                         Console.WriteLine($"You are now level {CurrentLvl}");
                         Console.ReadKey();
                     }
