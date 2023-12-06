@@ -25,21 +25,25 @@ namespace Library.Domain.Creatures
             {
                 Console.Clear();
                 Console.WriteLine($"You are facing a {enemy.Name}!");
-                Console.WriteLine($"Current HP: {player.CurrentHP}/{player.MaxHP}");
                 Console.WriteLine($"Enemy HP: {enemy.CurrentHP}/{enemy.MaxHP}");
-                Console.WriteLine("What is your next move?\n\t1-Direct attack\n\t2-Side attack\n\t3-Counter");
-                int attackType = 0;
-
-                do
-                {
-                    if (int.TryParse(Console.ReadLine(), out attackType) && attackType > 0 && attackType < 4)
-                        break;
-                    Console.WriteLine("Enter a correct number");
-                } while (true);
+                Console.WriteLine($"Current HP: {player.CurrentHP}/{player.MaxHP}");
+                int attackType = player.PlayerAttack();
 
                 enemy.EnemyAttackGenerator();
 
-                if (attackType == enemy.EnemyAttack)
+                if (enemy.Stunned==true)
+                {
+                    Console.WriteLine($"The enemy is stunned, you hit him!");
+                    enemy.Stunned = false;
+                    player.PlayerDmg(enemy);
+                }
+                else if (attackType == 0)
+                {
+                    Console.WriteLine($"You healed to full HP, but the enemy still hit you!");
+                    player.Stunned= false;
+                    EnemyDmg(player);
+                }
+                else if (attackType == enemy.EnemyAttack)
                 {
                     Console.WriteLine($"The enemy chose {enemy.EnemyAttack}, draw!");
                 }
@@ -48,10 +52,15 @@ namespace Library.Domain.Creatures
                     Console.WriteLine($"The enemy chose {enemy.EnemyAttack}, you get hit!");
                     EnemyDmg(player);
                 }
+                else if (CurrentMP<20)
+                {
+                    Console.WriteLine($"You recharge your mana!");
+                    player.PlayerDmg(enemy);
+                }
                 else
                 {
                     Console.WriteLine($"The enemy chose {enemy.EnemyAttack}, you hit him!");
-                    enemy.TakeDmg(player.Attack);
+                    player.PlayerDmg(enemy);
                 }
 
                 if (!enemy.CheckIsAlive())
@@ -70,9 +79,6 @@ namespace Library.Domain.Creatures
             return outcome;
         }
 
-        public virtual void EnemyDmg(Player player)
-        {
-            player.TakeDmg("strong");
-        }
+        public virtual void EnemyDmg(Player player){}
     }
 }

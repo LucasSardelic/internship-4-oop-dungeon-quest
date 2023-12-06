@@ -11,6 +11,11 @@ namespace Library.Domain
         public string Size {  get; set; }
         public string Attack { get; set; }
         public string Name {  get; set; }
+        public bool Stunned {  get; set; }=false;
+        public bool SecondDeath { get; set; } = false;
+        public int MaxMP { get; set; } = 100;
+        public int CurrentMP { get; set; } = 100;
+
 
         public void SetMaxHP(string size)
         {

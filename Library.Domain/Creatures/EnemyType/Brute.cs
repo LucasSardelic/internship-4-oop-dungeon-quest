@@ -5,7 +5,7 @@ namespace Library.Domain.Creatures.EnemyType
     {
         public Brute()
         {
-            Size = "medium";
+            Size = "large";
             Attack = "medium";
             Name = "brute";
         }
