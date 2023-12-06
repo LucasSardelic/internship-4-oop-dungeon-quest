@@ -65,18 +65,20 @@ namespace Library.Domain.Creatures
 
                 if (!enemy.CheckIsAlive())
                 {
-                    CurrentXp += enemy.XpValue;
+                    player.CurrentXp += enemy.XpValue;
+                    Console.WriteLine(player.CurrentXp);
+                    Console.ReadKey();
                     player.CurrentHP += player.MaxHP * 25 / 100;
                     if (player.CurrentHP > player.MaxHP)
                     { player.CurrentHP = player.MaxHP; }
-                    CurrentMP = MaxMP;
-                    if(CurrentXp>100)
+                    player.CurrentMP = player.MaxMP;
+                    if(player.CurrentXp>100)
                     {
-                        CurrentXp -= 100;
+                        player.CurrentXp -= 100;
                         CurrentLvl += 1;
                         player.MaxHP += 15;
-                        MaxMP += 15;
-                        CurrentMP += 15;
+                        player.MaxMP += 15;
+                        player.CurrentMP += 15;
                         player.CurrentHP += 15;
                         if(player.CurrentHP>player.MaxHP)
                         { player.CurrentHP = player.MaxHP; }
