@@ -16,10 +16,9 @@ namespace Library.Domain.Creatures
             EnemyAttack= randomNum.Next(3) + 1;
         }
 
-        public bool Encounter(Player player, Enemy enemy, int floor)
+        public bool Encounter(Player player, Enemy enemy, int floor, Dictionary<int, (string, int, int)> dungeonFloors)
         {
             bool outcome;
-            enemy.SetMaxHP(Size);
 
             do
             {
@@ -42,7 +41,7 @@ namespace Library.Domain.Creatures
                 {
                     Console.WriteLine($"You healed to full HP, but the enemy still hit you!");
                     player.Stunned= false;
-                    EnemyDmg(player);
+                    EnemyDmg(player, dungeonFloors, floor);
                 }
                 else if (attackType == enemy.EnemyAttack)
                 {
@@ -51,7 +50,7 @@ namespace Library.Domain.Creatures
                 else if ((attackType == enemy.EnemyAttack + 1) || (enemy.EnemyAttack == 3 && attackType == 1))
                 {
                     Console.WriteLine($"The enemy chose {enemy.EnemyAttack}, you get hit!");
-                    EnemyDmg(player);
+                    EnemyDmg(player, dungeonFloors, floor);
                 }
                 else if (CurrentMP<20)
                 {
@@ -66,7 +65,53 @@ namespace Library.Domain.Creatures
 
                 if (!enemy.CheckIsAlive())
                 {
+                    CurrentXp += enemy.XpValue;
+                    player.CurrentHP += player.MaxHP * 4 / 100;
+                    CurrentMP = MaxMP;
+                    if(CurrentXp>100)
+                    {
+                        CurrentXp -= 100;
+                        CurrentLvl += 1;
+                        player.MaxHP += 15;
+                        MaxMP += 15;
+                        CurrentMP += 15;
+                        player.CurrentHP += 15;
+                        player.Attack += 5;
+                        Crit -= 2;
+                        Stun -= 2;
+                        Console.WriteLine($"You are now level {CurrentLvl}");
+                        Console.ReadKey();
+                    }
                     outcome = true;
+
+                    if(enemy.Name == "witch")
+                    {
+                        enemy = new Goblin();
+
+                        if (enemy.Encounter(player, enemy, floor, dungeonFloors))
+                        {
+                            Console.WriteLine("You killed a witch spawn");
+                            Console.ReadKey();
+                        }
+                        else
+                        {
+                            Console.WriteLine("You died!");
+                            Console.WriteLine("Try again?\n\t1- Yes\n\t2- No");
+                            int answer = 0;
+
+                            do
+                            {
+                                if (int.TryParse(Console.ReadLine(), out answer) && answer > 0 && answer < 3)
+                                    break;
+                                Console.WriteLine("Enter a correct number");
+                            } while (true);
+
+                            if (answer == 1)
+                                floor = 0;
+                            else
+                                break;
+                        }
+                    }
                     break;
                 }
                 else if (!player.CheckIsAlive() && player.SecondDeath==true)
@@ -88,6 +133,6 @@ namespace Library.Domain.Creatures
             return outcome;
         }
 
-        public virtual void EnemyDmg(Player player){}
+        public virtual void EnemyDmg(Player player, Dictionary<int, (string, int, int)> dungeonFloors, int floor) {}
     }
 }

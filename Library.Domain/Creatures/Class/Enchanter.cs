@@ -8,8 +8,9 @@ namespace Library.Domain.Creatures.Class
     {
         public Enchanter()
         {
-            Size = "small";
-            Attack = "strong";
+            MaxHP = 75;
+            CurrentHP = MaxHP;
+            Attack = 200;
             SecondDeath = true;
         }
 

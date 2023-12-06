@@ -24,7 +24,7 @@ for (int i = 2; i < 11; i++)
     else
     {
         if(randomState>80)
-            DungeonFloors[i] = ("witch", 100, 100);
+            DungeonFloors[i] = ("witch", 200, 200);
         else if(randomState>50)
             DungeonFloors[i] = ("brute", 200, 200);
         else
@@ -60,7 +60,6 @@ else
 
 var enemy = new Enemy();
 
-player.SetMaxHP(player.Size);
 int floor = 0;
 
 do
@@ -77,7 +76,7 @@ do
     enemy.MaxHP = DungeonFloors[floor].Item2;
     enemy.CurrentHP = DungeonFloors[floor].Item3;
 
-    if (enemy.Encounter(player, enemy, floor))
+    if (enemy.Encounter(player, enemy, floor, DungeonFloors))
     {
         Console.WriteLine("You killed the beast, prepare yourself for you venture ever deeper...");
         Console.ReadKey();

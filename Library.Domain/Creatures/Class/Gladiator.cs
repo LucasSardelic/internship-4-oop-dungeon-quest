@@ -6,8 +6,9 @@ namespace Library.Domain.Creatures.Class
         public bool Rage { get; set; }
         public Gladiator()
         {
-            Size = "large";
-            Attack = "weak";
+            MaxHP = 220;
+            CurrentHP = MaxHP;
+            Attack = 50;
         }
 
         public override void PlayerSkill()

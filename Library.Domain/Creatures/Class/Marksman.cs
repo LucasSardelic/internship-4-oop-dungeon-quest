@@ -7,8 +7,9 @@ namespace Library.Domain.Creatures.Class
     {
         public Marksman()
         {
-            Size = "medium";
-            Attack = "medium";
+            MaxHP = 150;
+            CurrentHP = MaxHP;
+            Attack = 100;
         }
 
         public override void PlayerDmg(Enemy enemy)
@@ -17,7 +18,7 @@ namespace Library.Domain.Creatures.Class
             int critChance = randomNum.Next(100);
             int stunChance = randomNum.Next(100);
 
-            if (critChance > 90)
+            if (critChance > Crit)
             {
                 Console.WriteLine("You aim at a vital spot and score a critical hit!");
                 enemy.TakeDmg(Attack);
@@ -28,7 +29,7 @@ namespace Library.Domain.Creatures.Class
                 enemy.TakeDmg(Attack);
             }
 
-            if(stunChance > 90)
+            if(stunChance > Stun)
             {
                 Console.WriteLine("You stunned the enemy!");
                 enemy.Stunned=true;

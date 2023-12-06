@@ -4,8 +4,7 @@
     {
         public Player()
         {
-            Size = "large";
-            Attack = "medium";
+            Attack = 100;
         }
 
         public int PlayerAttack()

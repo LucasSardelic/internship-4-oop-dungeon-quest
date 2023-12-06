@@ -8,36 +8,23 @@ namespace Library.Domain
     {
         public int MaxHP { get; set; }
         public int CurrentHP { get; set; }
-        public string Size {  get; set; }
-        public string Attack { get; set; }
+        public int Attack { get; set; }
         public string Name {  get; set; }
+        public int XpValue {  get; set; }
         public bool Stunned {  get; set; }=false;
         public bool SecondDeath { get; set; } = false;
         public int MaxMP { get; set; } = 100;
         public int CurrentMP { get; set; } = 100;
+        public int CurrentLvl { get; set; } = 1;
+        public int CurrentXp { get; set; } = 0;
+        public int Crit { get; set; } = 90;
+        public int Stun { get; set; } = 90;
 
 
-        public void SetMaxHP(string size)
+
+        public void TakeDmg(int dmg)
         {
-            if (size == "small") 
-                MaxHP = 50;
-            else if(size=="medium")
-                MaxHP = 100;
-            else if(size=="large")
-                MaxHP = 200;
-            CurrentHP=MaxHP;
-        }
-
-        public void TakeDmg(string dmg)
-        {
-            if (dmg == "weak")
-                CurrentHP -= 20;
-            else if (dmg == "medium")
-                CurrentHP -= 40;
-            else if (dmg == "strong")
-                CurrentHP -= 80;
-            else if (dmg == "brute")
-                CurrentHP -= (MaxHP/4);
+            CurrentHP -= dmg;
         }
 
         public bool CheckIsAlive()

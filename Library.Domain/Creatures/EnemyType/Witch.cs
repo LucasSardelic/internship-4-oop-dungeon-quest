@@ -4,23 +4,27 @@
     {
         public Witch()
         {
-            Size = "medium";
-            Attack = "strong";
+            XpValue = 100;
+            Attack = 150;
             Name = "witch";
         }
 
-        public override void EnemyDmg(Player player)
+        public override void EnemyDmg(Player player, Dictionary<int, (string, int, int)> dungeonFloors, int floor)
         {
             var randomNum = new Random();
-            if (randomNum.Next(10) == 9)
+            if (randomNum.Next(10) >= 6)
             {
                 Console.WriteLine("Witch cast: soul pocus spell!");
-                player.TakeDmg("brute");
+                player.CurrentHP = randomNum.Next(1, player.MaxHP);
+                CurrentHP = randomNum.Next(1, MaxHP);
+                for(int i=floor+1; i< dungeonFloors.Count+1; i++)
+                {
+                    dungeonFloors[i] = (dungeonFloors[i].Item1, dungeonFloors[i].Item2, randomNum.Next(1, dungeonFloors[i].Item2));
+                }
             }
             else
             {
-                var SoulPocus = new Random();
-                player.CurrentHP = SoulPocus.Next(1, player.MaxHP);
+                player.TakeDmg(Attack);
             }
 
         }
