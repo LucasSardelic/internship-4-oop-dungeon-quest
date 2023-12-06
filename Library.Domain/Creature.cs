@@ -1,4 +1,5 @@
 ﻿using Library.Data;
+using System.Drawing;
 using System.Security.Cryptography.X509Certificates;
 
 namespace Library.Domain
@@ -7,16 +8,31 @@ namespace Library.Domain
     {
         public int MaxHP { get; set; }
         public int CurrentHP { get; set; }
+        public string Size {  get; set; }
+        public string Attack { get; set; }
+        public string Name {  get; set; }
 
-        public void SetMaxHP()
+        public void SetMaxHP(string size)
         {
-            MaxHP=100;
+            if (size == "small") 
+                MaxHP = 50;
+            else if(size=="medium")
+                MaxHP = 100;
+            else if(size=="large")
+                MaxHP = 200;
             CurrentHP=MaxHP;
         }
 
-        public void TakeDmg()
+        public void TakeDmg(string dmg)
         {
-            CurrentHP -= 40;
+            if (dmg == "weak")
+                CurrentHP -= 20;
+            else if (dmg == "medium")
+                CurrentHP -= 40;
+            else if (dmg == "strong")
+                CurrentHP -= 80;
+            else if (dmg == "brute")
+                CurrentHP -= (MaxHP/4);
         }
 
         public bool CheckIsAlive()

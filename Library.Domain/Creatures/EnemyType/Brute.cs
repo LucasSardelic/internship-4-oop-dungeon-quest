@@ -1,12 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace Library.Domain.Creatures.EnemyType
 {
-    internal class Brute
+    public class Brute:Enemy
     {
+        public Brute()
+        {
+            Size = "medium";
+            Attack = "medium";
+            Name = "brute";
+        }
+        public override void EnemyDmg(Player player)
+        {
+            var randomNum = new Random();
+            int randomState = randomNum.Next(10);
+            if (randomState == 9)
+            {
+                Console.WriteLine("The brute deals a massive blow! you lose 25% of your max HP");
+                player.TakeDmg("brute");
+            }
+            else
+            {
+                player.TakeDmg(Attack);
+            }
+
+        }
     }
 }
