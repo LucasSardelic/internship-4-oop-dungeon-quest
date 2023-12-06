@@ -76,6 +76,8 @@ namespace Library.Domain.Creatures
                         MaxMP += 15;
                         CurrentMP += 15;
                         player.CurrentHP += 15;
+                        if(player.CurrentHP>player.MaxHP)
+                        { player.CurrentHP = player.MaxHP; }
                         player.Attack += 5;
                         Crit -= 2;
                         Stun -= 2;
