@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace Library.Domain.Creatures
 {
-    internal class Player
+    public class Player:Creature
     {
+        public Player()
+        {
+            
+        }
     }
 }

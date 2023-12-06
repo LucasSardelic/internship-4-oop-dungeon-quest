@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Library.Domain.Creatures.EnemyType
 {
-    internal class Goblin
+    public class Goblin:Enemy
     {
+
     }
 }
