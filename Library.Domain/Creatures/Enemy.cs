@@ -16,7 +16,7 @@ namespace Library.Domain.Creatures
             EnemyAttack= randomNum.Next(3) + 1;
         }
 
-        public bool Encounter(Player player, Enemy enemy)
+        public bool Encounter(Player player, Enemy enemy, int floor)
         {
             bool outcome;
             enemy.SetMaxHP(Size);
@@ -24,6 +24,7 @@ namespace Library.Domain.Creatures
             do
             {
                 Console.Clear();
+                Console.WriteLine($"-- Floor {floor} --");
                 Console.WriteLine($"You are facing a {enemy.Name}!");
                 Console.WriteLine($"Enemy HP: {enemy.CurrentHP}/{enemy.MaxHP}");
                 Console.WriteLine($"Current HP: {player.CurrentHP}/{player.MaxHP}");
@@ -68,7 +69,15 @@ namespace Library.Domain.Creatures
                     outcome = true;
                     break;
                 }
-                else if (!player.CheckIsAlive())
+                else if (!player.CheckIsAlive() && player.SecondDeath==true)
+                {
+                    player.SecondDeath = false;
+                    player.CurrentHP = player.MaxHP;
+                    player.CurrentMP = player.MaxMP;
+                    Console.WriteLine("A powerful magic spell is still binding you to this realm... For now!");
+                    Console.WriteLine("You have used your sigle extra life.");
+                }
+                else if(!player.CheckIsAlive())
                 {
                     outcome = false;
                     break;
