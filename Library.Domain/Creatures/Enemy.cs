@@ -67,6 +67,8 @@ namespace Library.Domain.Creatures
                 {
                     CurrentXp += enemy.XpValue;
                     player.CurrentHP += player.MaxHP * 25 / 100;
+                    if (player.CurrentHP > player.MaxHP)
+                    { player.CurrentHP = player.MaxHP; }
                     CurrentMP = MaxMP;
                     if(CurrentXp>100)
                     {
